@@ -46,3 +46,27 @@ npm run test:e2e # or `npm run test:e2e:ci` for headless testing
 ```sh
 npm run lint
 ```
+
+---
+
+# サンプルコードの構造を理解する
+
+# リアクティブを理解する
+
+# 画面を増やす
+- 画面のパスを決める
+- router に1つエントリ追加する
+- pages に1画面(.vue)追加する
+
+# 画面に動作をつける
+- 初期化処理: `<script setup>` を使う
+  - 画面内に閉じた state の定義
+  - メソッドの定義
+- クリックイベント: `<button @click="メソッド名">`
+- 変数の中身を画面に描画: `${変数名}`
+
+# 共通store
+- pinia使ってる
+- state
+- actions
+- getters
