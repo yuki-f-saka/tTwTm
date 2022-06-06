@@ -8,12 +8,22 @@ defineProps({
   }
 })
 
-const count = ref(0);
-const increment = () => {
-    count.value++;
+// リアクティブっぽいこと
+const countReactive = ref(0);
+const incrementReactive = () => {
+    countReactive.value++;
 }
-const reset = () => {
-    count.value = 0;
+const resetReactive = () => {
+    countReactive.value = 0;
+}
+
+// 普通の変数でやった場合 
+const countNormal = 0;
+const incrementNormal = () => {
+    this.countNormal++;
+}
+const resetNormal = () => {
+    this.countNormal = 0;
 }
 </script>
 
@@ -22,9 +32,16 @@ const reset = () => {
     <h1 class="green">{{ msg }}</h1>
     <h3>This Area is Funasaka's Area.</h3>
     <br>
-    <div class="counter">count = {{count}}</div>
-    <button @click="increment">Count up</button>
-    <button @click="reset">Reset</button>
+    <div class="counter">
+        <div>countReactive = {{countReactive}}</div>
+        <button @click="incrementReactive">Count up(Reactive)</button>
+        <button @click="resetReactive">Reset(Reactive)</button>
+    </div>
+    <div class="counter">
+        <div>countNormal = {{countNormal}}</div>
+        <button @click="incrementNormal">Count up(Normal)</button>
+        <button @click="resetNormal">Reset(Normal)</button>
+    </div>
   </div>
 </template>
 
