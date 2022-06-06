@@ -21,6 +21,11 @@ const router = createRouter({
       path: '/example',
       name: 'example',
       component: () => import('../pages/example.vue')
+    },
+    {
+      path: '/hello-funasaka-world',
+      name: 'hello-funasaka-world',
+      component: () => import('../pages/helloFunasakaWorldPage.vue')
     }
   ]
 })
