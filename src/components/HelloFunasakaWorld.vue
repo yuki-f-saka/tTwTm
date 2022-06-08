@@ -25,6 +25,9 @@ const incrementNormal = () => {
 const resetNormal = () => {
     this.countNormal = 0;
 }
+
+// テキスト入力
+const text = ref("");
 </script>
 
 <template>
@@ -42,6 +45,10 @@ const resetNormal = () => {
         <button @click="incrementNormal">Count up(Normal)</button>
         <button @click="resetNormal">Reset(Normal)</button>
     </div>
+    <div class="inputText">
+        <div>inputText = {{text}}</div>
+        <input type="text" v-model="text" placeholder="テキスト入力"/>
+    </div>
   </div>
 </template>
 
@@ -51,6 +58,10 @@ const resetNormal = () => {
 }
 .counter {
     border: red 1px solid;
+    border-radius: 10px;
+}
+.inputText {
+    border: green 1px solid;
     border-radius: 10px;
 }
 </style>
