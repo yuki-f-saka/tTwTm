@@ -1,9 +1,10 @@
 <script setup>
-import HelloFunasakaWorld from '../components/HelloFunasakaWorld.vue';
+import ZoomView from '../components/ZoomView.vue';
+
 </script>
 
 <template>
   <div>
-    <HelloFunasakaWorld msg="Hello Funasaka World!"/>
+    <ZoomView/>
   </div>
 </template>
