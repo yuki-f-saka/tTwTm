@@ -4,43 +4,36 @@ import ZoomMtgEmbedded from '@zoomus/websdk/embedded'
 import { ref } from "vue";
 
 export default {
-  name: 'HelloWorld',
-  created () {
-  },
-  data () {
-    return {
-      client: ZoomMtgEmbedded.createClient(),
-      // This Sample App has been updated to use SDK App type credentials https://marketplace.zoom.us/docs/guides/build/sdk-app
-      sdkKey: import.meta.env.VITE_SDK_KEY,
-      meetingNumber: ref(""),
-      passWord: ref(""),
-      role: 0,
-      signatureEndpoint: "http://localhost:4000",
-      userEmail: "",
-      userName: "Vue.js",
-      // pass in the registrant's token if your meeting or webinar requires registration. More info here:
-      // Meetings: https://marketplace.zoom.us/docs/sdk/native-sdks/web/component-view/meetings#join-registered
-      // Webinars: https://marketplace.zoom.us/docs/sdk/native-sdks/web/component-view/webinars#join-registered
-      registrantToken: ''
-    }
-  },
-  methods: {
-    getSignature() {
-      axios.post(this.signatureEndpoint, {
-        meetingNumber: this.meetingNumber,
-        role: this.role
+  setup() {
+    const client = ZoomMtgEmbedded.createClient();
+    const sdkKey = import.meta.env.VITE_SDK_KEY;
+    const meetingNumber = ref();
+    const passWord = ref("");
+    const role = ref(0);
+    const signatureEndpoint = "http://localhost:4000";
+    const userEmail = "";
+    const userName = "Vue.js";
+    const registrantToken = "";
+
+    const getSignature = () => {
+      console.log(`getSignature meetingNumber: ${meetingNumber.value}`);
+      axios.post(signatureEndpoint, {
+        meetingNumber: meetingNumber.value,
+        role: role.value
       })
       .then(res => {
         console.log(res.data.signature);
-        this.startMeeting(res.data.signature);
+        startMeeting(res.data.signature);
       })
       .catch(error => {
         console.log(error);
       });
-    },
-    startMeeting(signature) {
+    };
+
+    const startMeeting = (signature) => {
+      console.log(`startMeeting meetingNumber: ${meetingNumber.value}`);
       let meetingSDKElement = document.getElementById('meetingSDKElement');
-      this.client.init({
+      client.init({
         debug: true,
         zoomAppRoot: meetingSDKElement,
         language: 'en-US',
@@ -59,18 +52,35 @@ export default {
           }
         }
       });
-      this.client.join({
-        sdkKey: this.sdkKey,
+      console.log(`before join meetingNumber: ${meetingNumber.value}`);
+      client.join({
+        sdkKey: sdkKey,
         signature: signature,
-        meetingNumber: this.meetingNumber,
-        password: this.passWord,
-        userName: this.userName,
-        userEmail: this.userEmail,
-        tk: this.registrantToken
+        meetingNumber: meetingNumber.value,
+        password: passWord.value,
+        userName: userName,
+        userEmail: userEmail,
+        tk: registrantToken
       })
+      console.log(`after join meetingNumber: ${meetingNumber.value}`);
+    };
+
+    return{
+      client,
+      sdkKey,
+      meetingNumber,
+      passWord,
+      role,
+      signatureEndpoint,
+      userEmail,
+      userName,
+      registrantToken,
+      getSignature,
+      startMeeting,
     }
-  }
-}
+
+  },
+};
 </script>
 
 <template>
