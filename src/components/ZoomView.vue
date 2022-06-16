@@ -3,61 +3,60 @@ import axios from "axios";
 import ZoomMtgEmbedded from '@zoomus/websdk/embedded'
 import { ref } from "vue";
   
-  const client = ZoomMtgEmbedded.createClient();
-  const sdkKey = import.meta.env.VITE_SDK_KEY;
-  const meetingNumber = ref();
-  const passWord = ref("");
-  const role = ref(0);
-  const signatureEndpoint = "http://localhost:4000";
-  const userEmail = "";
-  const userName = "Vue.js";
-  const registrantToken = "";
-    
-  const getSignature = () => {
-    axios.post(signatureEndpoint, {
-      meetingNumber: meetingNumber.value,
-      role: role.value
-    })
-    .then(res => {
-      console.log(res.data.signature);
-      startMeeting(res.data.signature);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  };
-
-  const startMeeting = (signature) => {
-    let meetingSDKElement = document.getElementById('meetingSDKElement');
-    client.init({
-      debug: true,
-      zoomAppRoot: meetingSDKElement,
-      language: 'en-US',
-      customize: {
-        meetingInfo: ['topic', 'host', 'mn', 'pwd', 'telPwd', 'invite', 'participant', 'dc', 'enctype'],
-        toolbar: {
-          buttons: [
-            {
-              text: 'Custom Button',
-              className: 'CustomButton',
-              onClick: () => {
-                console.log('custom button');
-              }
+const client = ZoomMtgEmbedded.createClient();
+const sdkKey = import.meta.env.VITE_SDK_KEY;
+const meetingNumber = ref();
+const passWord = ref("");
+const role = ref(0);
+const signatureEndpoint = "http://localhost:4000";
+const userEmail = "";
+const userName = "Vue.js";
+const registrantToken = "";
+  
+const getSignature = () => {
+  axios.post(signatureEndpoint, {
+    meetingNumber: meetingNumber.value,
+    role: role.value
+  })
+  .then(res => {
+    console.log(res.data.signature);
+    startMeeting(res.data.signature);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+};
+const startMeeting = (signature) => {
+  let meetingSDKElement = document.getElementById('meetingSDKElement');
+  client.init({
+    debug: true,
+    zoomAppRoot: meetingSDKElement,
+    language: 'en-US',
+    customize: {
+      meetingInfo: ['topic', 'host', 'mn', 'pwd', 'telPwd', 'invite', 'participant', 'dc', 'enctype'],
+      toolbar: {
+        buttons: [
+          {
+            text: 'Custom Button',
+            className: 'CustomButton',
+            onClick: () => {
+              console.log('custom button');
             }
-          ]
-        }
+          }
+        ]
       }
-    });
-    client.join({
-      sdkKey: sdkKey,
-      signature: signature,
-      meetingNumber: meetingNumber.value,
-      password: passWord.value,
-      userName: userName,
-      userEmail: userEmail,
-      tk: registrantToken
-    })
-  };
+    }
+  });
+  client.join({
+    sdkKey: sdkKey,
+    signature: signature,
+    meetingNumber: meetingNumber.value,
+    password: passWord.value,
+    userName: userName,
+    userEmail: userEmail,
+    tk: registrantToken
+  })
+};
 </script>
 
 <template>
