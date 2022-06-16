@@ -1,6 +1,7 @@
 <script>
 import axios from "axios";
 import ZoomMtgEmbedded from '@zoomus/websdk/embedded'
+import { ref } from "vue";
 
 export default {
   name: 'HelloWorld',
@@ -11,8 +12,8 @@ export default {
       client: ZoomMtgEmbedded.createClient(),
       // This Sample App has been updated to use SDK App type credentials https://marketplace.zoom.us/docs/guides/build/sdk-app
       sdkKey: import.meta.env.VITE_SDK_KEY,
-      meetingNumber: "5226474620",
-      passWord: "K0duZ3pSUzJCOEVJU2JWbVVFRmhRZz09",
+      meetingNumber: ref(""),
+      passWord: ref(""),
       role: 0,
       signatureEndpoint: "http://localhost:4000",
       userEmail: "",
@@ -80,7 +81,39 @@ export default {
         <div id="meetingSDKElement">
             <!-- Zoom Meeting SDK Component View Rendered Here -->
         </div>
-
+        <input id="meeting-number" type="number" v-model="meetingNumber" placeholder="meeting ID"/><br>
+        <input id="meeting-password" type="password" v-model="passWord" placeholder="meeting password"/><br>
         <button @click="getSignature">Join Meeting</button>
     </main>
 </template>
+
+<style scoped>
+main {
+  width: 70%;
+  margin: auto;
+  text-align: center;
+}
+main button {
+  margin-top: 20px;
+  background-color: #2D8CFF;
+  color: #ffffff;
+  text-decoration: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: inline-block;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+main button:hover {
+  background-color: #2681F2;
+}
+input[type="number"]::-webkit-outer-spin-button, 
+input[type="number"]::-webkit-inner-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+} 
+</style>
