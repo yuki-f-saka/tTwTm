@@ -21,6 +21,16 @@ const router = createRouter({
       path: '/example',
       name: 'example',
       component: () => import('../pages/example.vue')
+    },
+    {
+      path: '/kuniisample',
+      name: 'kuniisample',
+      component: () => import('../views/KuniiSample.vue')
+    },
+    {
+      path: '/wordlist',
+      name: 'wordlist',
+      component: () => import('../views/WordList.vue')
     }
   ]
 })
