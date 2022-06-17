@@ -1,10 +1,10 @@
 <script setup>
-import ZoomView from '../components/ZoomView.vue';
+import ZoomPanel from '../components/ZoomPanel.vue';
 
 </script>
 
 <template>
   <div>
-    <ZoomView/>
+    <ZoomPanel/>
   </div>
 </template>
