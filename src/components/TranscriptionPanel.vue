@@ -1,10 +1,14 @@
 <script setup>
 import { ref } from "vue";
+// import * as speechsdk from "microsoft-cognitiveservices-speech-sdk";
 
 var displayText = ref("INITIALIZED: ready to test speech...");
 
-const sttFromMic = async() => {
+(async () => {
     const { speechsdk } = await import('microsoft-cognitiveservices-speech-sdk');
+})();
+
+const sttFromMic = () => {
     const speechConfig = speechsdk.SpeechConfig.fromAuthorizationToken("93bce93b4da040629999cde7deebd5ef", "japaneast"); // 必ず.envに記載してそこから取ること！公開するな！
     speechConfig.speechRecognitionLanguage = 'ja-JP';
 
