@@ -1,29 +1,25 @@
 <script setup>
-import { ref } from "vue";
-// import * as speechsdk from "microsoft-cognitiveservices-speech-sdk";
+import { ref } from 'vue';
+import { SpeechConfig, AudioConfig, SpeechRecognizer, ResultReason } from 'microsoft-cognitiveservices-speech-sdk';
 
-var displayText = ref("INITIALIZED: ready to test speech...");
-
-(async () => {
-    const { speechsdk } = await import('microsoft-cognitiveservices-speech-sdk');
-})();
+let displayText = ref("INITIALIZED: ready to test speech...");
 
 const sttFromMic = () => {
-    const speechConfig = speechsdk.SpeechConfig.fromAuthorizationToken("93bce93b4da040629999cde7deebd5ef", "japaneast"); // 必ず.envに記載してそこから取ること！公開するな！
+    const speechConfig = SpeechConfig.fromAuthorizationToken(import.meta.env.VITE_AZURE_AUTHOLIZATION_TOKEN, import.meta.env.VITE_AZURE_REGION);
     speechConfig.speechRecognitionLanguage = 'ja-JP';
 
-    const audioConfig = speechsdk.AudioConfig.fromDefaultMicrophoneInput();
-    const recognizer = new speechsdk.SpeechRecognizer(speechConfig, audioConfig);
+    const audioConfig = AudioConfig.fromDefaultMicrophoneInput();
+    const recognizer = new SpeechRecognizer(speechConfig, audioConfig);
 
-    // this.displayText.value = "speak into your microphone...";
+    displayText.value = "speak into your microphone...";
 
     recognizer.recognizeOnceAsync(result => {
 
-        // if(result.reason === ResultReason.RecognizedSpeech)  {
-        //     displayText.value = `RECOGNIZED: Text=${result.text}`
-        // } else {
-        //     displayText.value = 'ERROR: Speech was cancelled or could not be recognized. Ensure your microphone is working properly.';
-        // }
+        if(result.reason === ResultReason.RecognizedSpeech)  {
+            displayText.value = `RECOGNIZED: Text=${result.text}`
+        } else {
+            displayText.value = 'ERROR: Speech was cancelled or could not be recognized. Ensure your microphone is working properly.';
+        }
     });
 };
 </script>
