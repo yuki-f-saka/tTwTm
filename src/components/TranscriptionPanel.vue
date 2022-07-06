@@ -1,21 +1,21 @@
 <script setup>
 import { ref } from 'vue';
-import { SpeechConfig, AudioConfig, SpeechRecognizer, ResultReason } from 'microsoft-cognitiveservices-speech-sdk';
+import * as sdk from 'microsoft-cognitiveservices-speech-sdk';
 
 let displayText = ref("INITIALIZED: ready to test speech...");
 
 const sttFromMic = () => {
-    const speechConfig = SpeechConfig.fromAuthorizationToken(import.meta.env.VITE_AZURE_AUTHOLIZATION_TOKEN, import.meta.env.VITE_AZURE_REGION);
+    const speechConfig = sdk.SpeechConfig.fromAuthorizationToken(import.meta.env.VITE_AZURE_AUTHOLIZATION_TOKEN, import.meta.env.VITE_AZURE_REGION);
     speechConfig.speechRecognitionLanguage = 'ja-JP';
 
-    const audioConfig = AudioConfig.fromDefaultMicrophoneInput();
-    const recognizer = new SpeechRecognizer(speechConfig, audioConfig);
+    const audioConfig = sdk.AudioConfig.fromDefaultMicrophoneInput();
+    const recognizer = new sdk.SpeechRecognizer(speechConfig, audioConfig);
 
     displayText.value = "speak into your microphone...";
 
     recognizer.recognizeOnceAsync(result => {
 
-        if(result.reason === ResultReason.RecognizedSpeech)  {
+        if(result.reason === sdk.ResultReason.RecognizedSpeech)  {
             displayText.value = `RECOGNIZED: Text=${result.text}`
         } else {
             displayText.value = 'ERROR: Speech was cancelled or could not be recognized. Ensure your microphone is working properly.';
